@@ -1,0 +1,439 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		66450DA41A85C9A4000B6811 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA31A85C9A4000B6811 /* AppDelegate.swift */; };
+		66450DA71A85C9A4000B6811 /* BruinLoader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA51A85C9A4000B6811 /* BruinLoader.xcdatamodeld */; };
+		66450DA91A85C9A4000B6811 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA81A85C9A4000B6811 /* ViewController.swift */; };
+		66450DAC1A85C9A4000B6811 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAA1A85C9A4000B6811 /* Main.storyboard */; };
+		66450DAE1A85C9A4000B6811 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAD1A85C9A4000B6811 /* Images.xcassets */; };
+		66450DB11A85C9A4000B6811 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAF1A85C9A4000B6811 /* LaunchScreen.xib */; };
+		66450DBD1A85C9A4000B6811 /* BruinLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		66450DB71A85C9A4000B6811 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 66450D961A85C9A4000B6811 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 66450D9D1A85C9A4000B6811;
+			remoteInfo = BruinLoader;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		66450D9E1A85C9A4000B6811 /* BruinLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BruinLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		66450DA21A85C9A4000B6811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66450DA31A85C9A4000B6811 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		66450DA61A85C9A4000B6811 /* BruinLoader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BruinLoader.xcdatamodel; sourceTree = "<group>"; };
+		66450DA81A85C9A4000B6811 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		66450DAB1A85C9A4000B6811 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		66450DAD1A85C9A4000B6811 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		66450DB01A85C9A4000B6811 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		66450DB61A85C9A4000B6811 /* BruinLoaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BruinLoaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		66450DBB1A85C9A4000B6811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruinLoaderTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		66450D9B1A85C9A4000B6811 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66450DB31A85C9A4000B6811 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		66450D951A85C9A4000B6811 = {
+			isa = PBXGroup;
+			children = (
+				66450DA01A85C9A4000B6811 /* BruinLoader */,
+				66450DB91A85C9A4000B6811 /* BruinLoaderTests */,
+				66450D9F1A85C9A4000B6811 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		66450D9F1A85C9A4000B6811 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				66450D9E1A85C9A4000B6811 /* BruinLoader.app */,
+				66450DB61A85C9A4000B6811 /* BruinLoaderTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		66450DA01A85C9A4000B6811 /* BruinLoader */ = {
+			isa = PBXGroup;
+			children = (
+				66450DA31A85C9A4000B6811 /* AppDelegate.swift */,
+				66450DA81A85C9A4000B6811 /* ViewController.swift */,
+				66450DAA1A85C9A4000B6811 /* Main.storyboard */,
+				66450DAD1A85C9A4000B6811 /* Images.xcassets */,
+				66450DAF1A85C9A4000B6811 /* LaunchScreen.xib */,
+				66450DA51A85C9A4000B6811 /* BruinLoader.xcdatamodeld */,
+				66450DA11A85C9A4000B6811 /* Supporting Files */,
+			);
+			path = BruinLoader;
+			sourceTree = "<group>";
+		};
+		66450DA11A85C9A4000B6811 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				66450DA21A85C9A4000B6811 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		66450DB91A85C9A4000B6811 /* BruinLoaderTests */ = {
+			isa = PBXGroup;
+			children = (
+				66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */,
+				66450DBA1A85C9A4000B6811 /* Supporting Files */,
+			);
+			path = BruinLoaderTests;
+			sourceTree = "<group>";
+		};
+		66450DBA1A85C9A4000B6811 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				66450DBB1A85C9A4000B6811 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		66450D9D1A85C9A4000B6811 /* BruinLoader */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66450DC01A85C9A4000B6811 /* Build configuration list for PBXNativeTarget "BruinLoader" */;
+			buildPhases = (
+				66450D9A1A85C9A4000B6811 /* Sources */,
+				66450D9B1A85C9A4000B6811 /* Frameworks */,
+				66450D9C1A85C9A4000B6811 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BruinLoader;
+			productName = BruinLoader;
+			productReference = 66450D9E1A85C9A4000B6811 /* BruinLoader.app */;
+			productType = "com.apple.product-type.application";
+		};
+		66450DB51A85C9A4000B6811 /* BruinLoaderTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 66450DC31A85C9A4000B6811 /* Build configuration list for PBXNativeTarget "BruinLoaderTests" */;
+			buildPhases = (
+				66450DB21A85C9A4000B6811 /* Sources */,
+				66450DB31A85C9A4000B6811 /* Frameworks */,
+				66450DB41A85C9A4000B6811 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				66450DB81A85C9A4000B6811 /* PBXTargetDependency */,
+			);
+			name = BruinLoaderTests;
+			productName = BruinLoaderTests;
+			productReference = 66450DB61A85C9A4000B6811 /* BruinLoaderTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		66450D961A85C9A4000B6811 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0620;
+				ORGANIZATIONNAME = "Matthew DeCoste";
+				TargetAttributes = {
+					66450D9D1A85C9A4000B6811 = {
+						CreatedOnToolsVersion = 6.2;
+					};
+					66450DB51A85C9A4000B6811 = {
+						CreatedOnToolsVersion = 6.2;
+						TestTargetID = 66450D9D1A85C9A4000B6811;
+					};
+				};
+			};
+			buildConfigurationList = 66450D991A85C9A4000B6811 /* Build configuration list for PBXProject "BruinLoader" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 66450D951A85C9A4000B6811;
+			productRefGroup = 66450D9F1A85C9A4000B6811 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				66450D9D1A85C9A4000B6811 /* BruinLoader */,
+				66450DB51A85C9A4000B6811 /* BruinLoaderTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		66450D9C1A85C9A4000B6811 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66450DAC1A85C9A4000B6811 /* Main.storyboard in Resources */,
+				66450DB11A85C9A4000B6811 /* LaunchScreen.xib in Resources */,
+				66450DAE1A85C9A4000B6811 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66450DB41A85C9A4000B6811 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		66450D9A1A85C9A4000B6811 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66450DA91A85C9A4000B6811 /* ViewController.swift in Sources */,
+				66450DA41A85C9A4000B6811 /* AppDelegate.swift in Sources */,
+				66450DA71A85C9A4000B6811 /* BruinLoader.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		66450DB21A85C9A4000B6811 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				66450DBD1A85C9A4000B6811 /* BruinLoaderTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		66450DB81A85C9A4000B6811 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 66450D9D1A85C9A4000B6811 /* BruinLoader */;
+			targetProxy = 66450DB71A85C9A4000B6811 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		66450DAA1A85C9A4000B6811 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				66450DAB1A85C9A4000B6811 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		66450DAF1A85C9A4000B6811 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				66450DB01A85C9A4000B6811 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		66450DBE1A85C9A4000B6811 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		66450DBF1A85C9A4000B6811 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		66450DC11A85C9A4000B6811 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BruinLoader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		66450DC21A85C9A4000B6811 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = BruinLoader/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		66450DC41A85C9A4000B6811 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BruinLoaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BruinLoader.app/BruinLoader";
+			};
+			name = Debug;
+		};
+		66450DC51A85C9A4000B6811 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BruinLoaderTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BruinLoader.app/BruinLoader";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		66450D991A85C9A4000B6811 /* Build configuration list for PBXProject "BruinLoader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66450DBE1A85C9A4000B6811 /* Debug */,
+				66450DBF1A85C9A4000B6811 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		66450DC01A85C9A4000B6811 /* Build configuration list for PBXNativeTarget "BruinLoader" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66450DC11A85C9A4000B6811 /* Debug */,
+				66450DC21A85C9A4000B6811 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		66450DC31A85C9A4000B6811 /* Build configuration list for PBXNativeTarget "BruinLoaderTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				66450DC41A85C9A4000B6811 /* Debug */,
+				66450DC51A85C9A4000B6811 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		66450DA51A85C9A4000B6811 /* BruinLoader.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				66450DA61A85C9A4000B6811 /* BruinLoader.xcdatamodel */,
+			);
+			currentVersion = 66450DA61A85C9A4000B6811 /* BruinLoader.xcdatamodel */;
+			path = BruinLoader.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 66450D961A85C9A4000B6811 /* Project object */;
+}
