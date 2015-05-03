@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		662FC3C91AC52B8400C56ECD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662FC3C81AC52B8400C56ECD /* CloudKit.framework */; };
 		66450DA41A85C9A4000B6811 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA31A85C9A4000B6811 /* AppDelegate.swift */; };
 		66450DA71A85C9A4000B6811 /* BruinLoader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA51A85C9A4000B6811 /* BruinLoader.xcdatamodeld */; };
-		66450DA91A85C9A4000B6811 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA81A85C9A4000B6811 /* ViewController.swift */; };
 		66450DAC1A85C9A4000B6811 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAA1A85C9A4000B6811 /* Main.storyboard */; };
 		66450DAE1A85C9A4000B6811 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAD1A85C9A4000B6811 /* Images.xcassets */; };
 		66450DB11A85C9A4000B6811 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAF1A85C9A4000B6811 /* LaunchScreen.xib */; };
 		66450DBD1A85C9A4000B6811 /* BruinLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */; };
+		66450DCA1A85CAD3000B6811 /* ProgressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */; };
+		66450DCE1A85CB6D000B6811 /* StartTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */; };
+		66951A351AC297C2002B359F /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A341AC297C2002B359F /* CloudManager.swift */; };
+		66951A371AC29813002B359F /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A361AC29813002B359F /* Food.swift */; };
+		66951A391AC29838002B359F /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A381AC29838002B359F /* FoodModel.swift */; };
+		66951A3E1AC4EF63002B359F /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A3D1AC4EF63002B359F /* Parser.swift */; };
+		66951A431AC4F1FA002B359F /* HppleElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A401AC4F1FA002B359F /* HppleElement.swift */; };
+		66951A441AC4F1FA002B359F /* Hpple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A411AC4F1FA002B359F /* Hpple.swift */; };
+		66951A451AC4F1FB002B359F /* XPathQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A421AC4F1FA002B359F /* XPathQuery.swift */; };
+		66951A471AC4F217002B359F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66951A461AC4F217002B359F /* libxml2.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,17 +37,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		662FC3C81AC52B8400C56ECD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		66450D9E1A85C9A4000B6811 /* BruinLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BruinLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66450DA21A85C9A4000B6811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66450DA31A85C9A4000B6811 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		66450DA61A85C9A4000B6811 /* BruinLoader.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BruinLoader.xcdatamodel; sourceTree = "<group>"; };
-		66450DA81A85C9A4000B6811 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		66450DAB1A85C9A4000B6811 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		66450DAD1A85C9A4000B6811 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		66450DB01A85C9A4000B6811 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		66450DB61A85C9A4000B6811 /* BruinLoaderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BruinLoaderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		66450DBB1A85C9A4000B6811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruinLoaderTests.swift; sourceTree = "<group>"; };
+		66450DC61A85C9B6000B6811 /* BruinLoader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BruinLoader.entitlements; sourceTree = "<group>"; };
+		66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTableViewController.swift; sourceTree = "<group>"; };
+		66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartTableViewController.swift; sourceTree = "<group>"; };
+		66951A341AC297C2002B359F /* CloudManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
+		66951A361AC29813002B359F /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
+		66951A381AC29838002B359F /* FoodModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
+		66951A3D1AC4EF63002B359F /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		66951A401AC4F1FA002B359F /* HppleElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HppleElement.swift; sourceTree = "<group>"; };
+		66951A411AC4F1FA002B359F /* Hpple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hpple.swift; sourceTree = "<group>"; };
+		66951A421AC4F1FA002B359F /* XPathQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPathQuery.swift; sourceTree = "<group>"; };
+		66951A461AC4F217002B359F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		66951A481AC4F232002B359F /* BruinLoader-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "BruinLoader-Bridging-Header.h"; path = "BruinLoader/BruinLoader-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				66951A471AC4F217002B359F /* libxml2.dylib in Frameworks */,
+				662FC3C91AC52B8400C56ECD /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,9 +85,12 @@
 		66450D951A85C9A4000B6811 = {
 			isa = PBXGroup;
 			children = (
+				662FC3C81AC52B8400C56ECD /* CloudKit.framework */,
+				66951A461AC4F217002B359F /* libxml2.dylib */,
 				66450DA01A85C9A4000B6811 /* BruinLoader */,
 				66450DB91A85C9A4000B6811 /* BruinLoaderTests */,
 				66450D9F1A85C9A4000B6811 /* Products */,
+				66951A481AC4F232002B359F /* BruinLoader-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,13 +106,17 @@
 		66450DA01A85C9A4000B6811 /* BruinLoader */ = {
 			isa = PBXGroup;
 			children = (
+				66951A3F1AC4F1E3002B359F /* Hpple */,
+				66450DC61A85C9B6000B6811 /* BruinLoader.entitlements */,
 				66450DA31A85C9A4000B6811 /* AppDelegate.swift */,
-				66450DA81A85C9A4000B6811 /* ViewController.swift */,
 				66450DAA1A85C9A4000B6811 /* Main.storyboard */,
+				666DA3AE1A85DC0D005479C0 /* Controller */,
+				666DA3AF1A85DC1E005479C0 /* Cells */,
 				66450DAD1A85C9A4000B6811 /* Images.xcassets */,
 				66450DAF1A85C9A4000B6811 /* LaunchScreen.xib */,
 				66450DA51A85C9A4000B6811 /* BruinLoader.xcdatamodeld */,
 				66450DA11A85C9A4000B6811 /* Supporting Files */,
+				66951A3A1AC2984A002B359F /* Required */,
 			);
 			path = BruinLoader;
 			sourceTree = "<group>";
@@ -113,6 +144,43 @@
 				66450DBB1A85C9A4000B6811 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		666DA3AE1A85DC0D005479C0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */,
+				66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		666DA3AF1A85DC1E005479C0 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		66951A3A1AC2984A002B359F /* Required */ = {
+			isa = PBXGroup;
+			children = (
+				66951A341AC297C2002B359F /* CloudManager.swift */,
+				66951A3D1AC4EF63002B359F /* Parser.swift */,
+				66951A361AC29813002B359F /* Food.swift */,
+				66951A381AC29838002B359F /* FoodModel.swift */,
+			);
+			name = Required;
+			sourceTree = "<group>";
+		};
+		66951A3F1AC4F1E3002B359F /* Hpple */ = {
+			isa = PBXGroup;
+			children = (
+				66951A401AC4F1FA002B359F /* HppleElement.swift */,
+				66951A411AC4F1FA002B359F /* Hpple.swift */,
+				66951A421AC4F1FA002B359F /* XPathQuery.swift */,
+			);
+			name = Hpple;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +232,12 @@
 				TargetAttributes = {
 					66450D9D1A85C9A4000B6811 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = E9WQ3XUKSG;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					66450DB51A85C9A4000B6811 = {
 						CreatedOnToolsVersion = 6.2;
@@ -215,9 +289,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				66450DA91A85C9A4000B6811 /* ViewController.swift in Sources */,
+				66951A351AC297C2002B359F /* CloudManager.swift in Sources */,
 				66450DA41A85C9A4000B6811 /* AppDelegate.swift in Sources */,
 				66450DA71A85C9A4000B6811 /* BruinLoader.xcdatamodeld in Sources */,
+				66951A431AC4F1FA002B359F /* HppleElement.swift in Sources */,
+				66450DCE1A85CB6D000B6811 /* StartTableViewController.swift in Sources */,
+				66951A451AC4F1FB002B359F /* XPathQuery.swift in Sources */,
+				66951A3E1AC4EF63002B359F /* Parser.swift in Sources */,
+				66450DCA1A85CAD3000B6811 /* ProgressTableViewController.swift in Sources */,
+				66951A371AC29813002B359F /* Food.swift in Sources */,
+				66951A441AC4F1FA002B359F /* Hpple.swift in Sources */,
+				66951A391AC29838002B359F /* FoodModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,9 +424,21 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = BruinLoader/BruinLoader.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					$SDKROOT/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = BruinLoader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "BruinLoader/BruinLoader-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -352,9 +446,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = BruinLoader/BruinLoader.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					$SDKROOT/usr/include/libxml2,
+				);
 				INFOPLIST_FILE = BruinLoader/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "BruinLoader/BruinLoader-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -411,6 +516,7 @@
 				66450DC21A85C9A4000B6811 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		66450DC31A85C9A4000B6811 /* Build configuration list for PBXNativeTarget "BruinLoaderTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +525,7 @@
 				66450DC51A85C9A4000B6811 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
