@@ -11,7 +11,7 @@ import UIKit
 func preload(daysAhead: Int = 7) {
 	let today = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
 	
-	for i in -1...daysAhead {
+	for i in 0...daysAhead {
 		let day = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: i, toDate: today, options: .allZeros)!
 		loadAndSave(day)
 	}
@@ -34,27 +34,46 @@ func loadAndSave(date: NSDate) {
 func loadAllBrief(date: NSDate) -> DayBrief {
 	var hours = loadHours(date)
 	
+	let formatter = NSDateFormatter()
+	formatter.dateStyle = .ShortStyle
+	println("\n\n" + formatter.stringFromDate(date))
+	
 	var day = DayBrief(date: date, meals: [:])
 	
-	for meal in MealType.allMeals(date) {
+	var baseMeals = MealType.allMeals(date)
+	baseMeals.append(MealType.LateNight)
+	
+	for meal in baseMeals {
 		println("\n" + meal.rawValue)
 		
 		var mealHours = hours[meal]!
 		var mealBrief = MealBrief(halls: [:])
 		
-		for hall in Halls.allDiningHalls {
-			println(hall.rawValue)
-			
-			let (success, hallBrief, foods) = loadMealBrief(hall, meal, date)
-			if success {
-				var hallHours = mealHours[hall]!
-				if hallHours.open {
-					hallBrief.openTime = (hallHours.openTime)!
-					hallBrief.closeTime = (hallHours.closeTime)!
-				}
-				mealBrief.halls[hall] = hallBrief
-				for (recipe, food) in foods {
-					day.foods[recipe] = food
+		if meal != .LateNight {
+			for hall in Halls.allDiningHalls {
+				println(hall.rawValue)
+				
+				let (success, hallBrief, foods) = loadMealBrief(hall, meal, date)
+				if success {
+					var hallHours = mealHours[hall]!
+					if hallHours.open {
+						hallBrief.openTime = (hallHours.openTime)!
+						hallBrief.closeTime = (hallHours.closeTime)!
+					}
+					mealBrief.halls[hall] = hallBrief
+					for (recipe, food) in foods {
+						// if first time, create food collection
+						if day.foods[recipe] == nil {
+							day.foods[recipe] = FoodCollection(info: food)
+						}
+						
+						// make a list of where it's from
+						if let mealColl = day.foods[recipe]!.places[meal.rawValue] {
+							day.foods[recipe]!.places[meal.rawValue]![hall.rawValue] = true
+						} else {
+							day.foods[recipe]!.places[meal.rawValue] = [hall.rawValue : true]
+						}
+					}
 				}
 			}
 		}
@@ -144,9 +163,16 @@ func loadQuick() -> DayBrief {
 	}
 	
 	for partBrief in allInfo {
-		for key in partBrief.foods.keys {
-			let food = partBrief.foods[key]!
-			quickBrief.foods[food.recipe] = food
+		for (recipe, collection) in partBrief.foods {
+			if quickBrief.foods[recipe] == nil {
+				quickBrief.foods[recipe] = collection
+			} else {
+				for (meal, halls) in collection.places {
+					for (hall, involved) in halls {
+						quickBrief.foods[recipe]!.places[meal]![hall] = involved
+					}
+				}
+			}
 		}
 	}
 	
@@ -163,7 +189,7 @@ func loadQuick() -> DayBrief {
 
 func loadBruinCafe() -> DayBrief {
 	let currHall = Halls.BruinCafe
-	var foods: Dictionary<String, FoodInfo> = [:]
+	var foods: Dictionary<String, FoodCollection> = [:]
 	
 	let url = "http://menu.ha.ucla.edu/foodpro/bruincafe.asp"
 	let subsectClass = "subsectiontop"
@@ -220,7 +246,7 @@ func loadBruinCafe() -> DayBrief {
 							
 							if valid {
 								food.description = descr == "" ? price : "\(descr) (\(price))"
-								foods[food.recipe] = food
+								foods[food.recipe] = FoodCollection(info: food)
 								sectionBrief.foods.append(FoodBrief(food: food))
 							}
 						}
@@ -275,7 +301,7 @@ func loadBruinCafe() -> DayBrief {
 
 func loadCafe1919() -> DayBrief {
 	let currHall = Halls.Cafe1919
-	var foods: Dictionary<String, FoodInfo> = [:]
+	var foods: Dictionary<String, FoodCollection> = [:]
 	
 	var error: NSError? = nil
 	let url = NSURL(string: "http://menu.ha.ucla.edu/foodpro/cafe1919.asp")!
@@ -344,7 +370,7 @@ func loadCafe1919() -> DayBrief {
 				}
 				
 				sectionBrief.foods.append(foodBrief)
-				foods[food.recipe] = food
+				foods[food.recipe] = FoodCollection(info: food)
 			}
 		}
 		restBrief.sections.append(sectionBrief)
@@ -380,7 +406,7 @@ func loadCafe1919() -> DayBrief {
 
 func loadRendezvous() -> DayBrief {
 	let currHall = Halls.Rendezvous
-	var foods: Dictionary<String, FoodInfo> = [:]
+	var foods: Dictionary<String, FoodCollection> = [:]
 	
 	var error: NSError? = nil
 	let url = NSURL(string: "http://menu.ha.ucla.edu/foodpro/rendezvous.asp")!
@@ -474,7 +500,7 @@ func loadRendezvous() -> DayBrief {
 								}
 								foodBrief.sideBrief = FoodBrief(food: FoodInfo(name: price, recipe: "", type: .Regular))
 								
-								foods[food.recipe] = food
+								foods[food.recipe] = FoodCollection(info: food)
 								currSectionFoods.append(foodBrief)
 							}
 						}
@@ -573,7 +599,7 @@ func loadRendezvous() -> DayBrief {
 
 func loadLateNight() -> DayBrief {
 	let currHall = Halls.DeNeve
-	var foods: Dictionary<String, FoodInfo> = [:]
+	var foods: Dictionary<String, FoodCollection> = [:]
 	
 	var error: NSError? = nil
 	let url = NSURL(string: "http://menu.ha.ucla.edu/foodpro/denevelatenight.asp")!
@@ -646,6 +672,10 @@ func loadLateNight() -> DayBrief {
 							subtitle = number + " Swipe" + ending
 						}
 					}
+				}
+				
+				if food.recipe != "" {
+					foods[food.recipe] = FoodCollection(info: food)
 				}
 				
 				if subtitle != "" {
@@ -929,13 +959,27 @@ func loadNutrition(recipe: String, portion: String) -> (nutrition: Dictionary<Nu
 	var url = foodURL(recipe, portion)
 	var htmlError: NSError? = nil
 	
-	var html = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSASCIIStringEncoding, error: &htmlError) as! String
-	if html.rangeOfString("Nutrition") == nil { // fail case
-		return (nutrition: [:], ingredients: "")
+	for i in 0...1 {
+		if let html: String = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSASCIIStringEncoding, error: &htmlError)?.stringByAppendingString("") {
+			if html.rangeOfString("Nutrition") == nil { // fail case
+				return (nutrition: [:], ingredients: "")
+			}
+			
+			var parser = Hpple(HTMLData: html)
+			return (nutrition: loadNutritionFacts(parser), ingredients: loadIngredients(parser))
+		} else {
+			println("Attempt \(i) failed: \(htmlError)")
+		}
 	}
+	abort()
 	
-	var parser = Hpple(HTMLData: html)
-	return (nutrition: loadNutritionFacts(parser), ingredients: loadIngredients(parser))
+//	var html = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSASCIIStringEncoding, error: &htmlError) as! String
+//	if html.rangeOfString("Nutrition") == nil { // fail case
+//		return (nutrition: [:], ingredients: "")
+//	}
+//	
+//	var parser = Hpple(HTMLData: html)
+//	return (nutrition: loadNutritionFacts(parser), ingredients: loadIngredients(parser))
 }
 
 // MARK: Helpers
@@ -963,20 +1007,21 @@ func foodDescriptions(html: String) -> Dictionary<String, String> {
 			recipe = recipe.substringToIndex((info?.startIndex)!)
 			
 			// parse popovers
-			var items = (Hpple(HTMLData: popover).searchWithXPathQuery("//*"))!
-			for item in items {
-				var raw = item.children?.first?.children?.first?.raw
-				if raw == nil || raw?.rangeOfString("<p>") == nil { continue }
-				
-				// clean up, add in
-				var description = raw!.stringByReplacingOccurrencesOfString("<p>", withString: "")
-				description = description.stringByReplacingOccurrencesOfString("</p>", withString: "")
-				description = description.stringByReplacingOccurrencesOfString("<br/>", withString: " ")
-				description = description.stringByReplacingOccurrencesOfString("\n", withString: "")
-				description = description.stringByReplacingOccurrencesOfString("&amp;ntilde", withString: "ñ")
-				description = description.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
-				description = description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "() "))
-				if (count(description) > 1) { recipeDescriptions[recipe] = description }
+			if let items = (Hpple(HTMLData: popover).searchWithXPathQuery("//*")) {
+				for item in items {
+					var raw = item.children?.first?.children?.first?.raw
+					if raw == nil || raw?.rangeOfString("<p>") == nil { continue }
+					
+					// clean up, add in
+					var description = raw!.stringByReplacingOccurrencesOfString("<p>", withString: "")
+					description = description.stringByReplacingOccurrencesOfString("</p>", withString: "")
+					description = description.stringByReplacingOccurrencesOfString("<br/>", withString: " ")
+					description = description.stringByReplacingOccurrencesOfString("\n", withString: "")
+					description = description.stringByReplacingOccurrencesOfString("&amp;ntilde", withString: "ñ")
+					description = description.stringByReplacingOccurrencesOfString("&amp;", withString: "&")
+					description = description.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "() "))
+					if (count(description) > 1) { recipeDescriptions[recipe] = description }
+				}
 			}
 		}
 	}

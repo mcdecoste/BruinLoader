@@ -9,7 +9,10 @@
 import UIKit
 
 class StartTableViewController: UITableViewController {
-	var cells: Array<Array<(name: String, value: Bool)>> = [[("Load Menus", true), ("Update Menus", true), ("Update Quick", false)], [("Go", false)]]
+//	var cells: Array<Array<(name: String, value: Bool)>> = [[("Load Menus", true), ("Update Menus", true), ("Update Quick", false)], [("Go", false)]]
+	var cells: Array<(name: String, value: Bool)> = [("Update Hall Menus", true), ("Update Quick", false)]
+	var hallRow: Int = 0
+	var quickRow: Int = 1
 	let cellID = "Cell"
 	
     override func viewDidLoad() {
@@ -17,8 +20,7 @@ class StartTableViewController: UITableViewController {
 		
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: cellID)
 		
-		preload()
-//		loadAndSaveQuick()
+//		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Go", style: .Plain, target: self, action: "load")
     }
 
     override func didReceiveMemoryWarning() {
@@ -57,16 +59,36 @@ class StartTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return cells.count
+        return 2
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cells[section].count
+		switch section {
+		case 0:
+			return cells.count
+		case 1:
+			return 1
+		default:
+			return 0
+		}
     }
 
 	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-		var cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! UITableViewCell
-		let info = cells[indexPath.section][indexPath.row]
+		switch indexPath.section {
+		case 0:
+			return optionsCell(indexPath.row)
+		default:
+			var cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: indexPath) as! UITableViewCell
+			cell.textLabel?.text = "Go!"
+			
+			return cell
+		}
+	}
+	
+	func optionsCell(row: Int) -> UITableViewCell {
+		var cell = tableView.dequeueReusableCellWithIdentifier(cellID, forIndexPath: NSIndexPath(forRow: row, inSection: 0)) as! UITableViewCell
+		let info = cells[row]
+		
 		cell.textLabel?.text = info.name
 		cell.accessoryType = info.value ? .Checkmark : .None
 		
@@ -74,16 +96,33 @@ class StartTableViewController: UITableViewController {
 	}
 	
 	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-		let (section, row) = (indexPath.section, indexPath.row)
 		
-		switch (section, row) {
-		case (0, _):
-			cells[section][row].value = !cells[section][row].value
-			tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+		
+		switch indexPath.section {
+		case 0:
+			cells[indexPath.row].value = !cells[indexPath.row].value
+			tableView.cellForRowAtIndexPath(indexPath)?.accessoryType = cells[indexPath.row].value ? .Checkmark : .None
+			tableView.deselectRowAtIndexPath(indexPath, animated: true)
 		default:
-			// TODO: transition to other view
+			var loadingView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+			loadingView.startAnimating()
+			tableView.cellForRowAtIndexPath(indexPath)?.accessoryView = loadingView
 			
 			tableView.deselectRowAtIndexPath(indexPath, animated: true)
+			
+			load()
+			(tableView.cellForRowAtIndexPath(indexPath)?.accessoryView as! UIActivityIndicatorView).stopAnimating()
+			tableView.cellForRowAtIndexPath(indexPath)?.accessoryView = nil
+		}
+	}
+	
+	private func load() {
+		if cells[hallRow].value {
+			preload()
+		}
+		
+		if cells[quickRow].value {
+			loadAndSaveQuick()
 		}
 	}
 	

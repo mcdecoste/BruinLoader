@@ -193,20 +193,45 @@ class CloudManager: NSObject {
 	}
 	
 	func addRecord(date: NSDate, data: NSData, completion: (record: CKRecord) -> Void) {
+		// create new data
 		var record = CKRecord(recordType: HallRecordType, recordID: idFromDate(date))
 		record.setObject(comparisonDate(date), forKey: CKDateField)
 		record.setObject(data, forKey: CKDataField)
 		
-		let saveOp = CKModifyRecordsOperation(recordsToSave: [record], recordIDsToDelete: [])
-		saveOp.savePolicy = CKRecordSavePolicy.ChangedKeys
-		saveOp.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
-			if let hasError = error {
-				println("Error!: \(hasError.description)")
+		// download the current record (if it exists) and compare
+		// Fetch the record from the database
+		
+		let dateID = idFromDate(date)
+		publicDB.fetchRecordWithID(dateID, completionHandler: { (fetched, error) -> Void in
+			let isDifferent: Bool
+			if fetched == nil {
+				isDifferent = true
 			} else {
-				println("Upload complete!")
+				isDifferent = fetched.objectForKey(self.CKDataField) as! NSData != record.objectForKey(self.CKDataField) as! NSData
 			}
-		}
-		publicDB.addOperation(saveOp)
+			
+			if error != nil {
+				println(error)
+			}
+			
+			if isDifferent {
+				println("\(dateID.recordName) has changed")
+				
+				// time to save the new record
+				let saveOp = CKModifyRecordsOperation(recordsToSave: [record], recordIDsToDelete: [])
+				saveOp.savePolicy = CKRecordSavePolicy.ChangedKeys
+				saveOp.modifyRecordsCompletionBlock = { savedRecords, deletedRecordIDs, error in
+					if let hasError = error {
+						println("Error!: \(hasError.description)")
+					} else {
+						println("Upload complete for \(dateID.recordName)")
+					}
+				}
+				self.publicDB.addOperation(saveOp)
+			} else {
+				println("No change for \(dateID.recordName)")
+			}
+		})
 	}
 	
 	func addQuickRecord(data: NSData, completion: (record: CKRecord) -> Void) {
