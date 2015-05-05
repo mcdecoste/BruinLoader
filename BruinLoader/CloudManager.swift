@@ -207,7 +207,7 @@ class CloudManager: NSObject {
 			if fetched == nil {
 				isDifferent = true
 			} else {
-				isDifferent = fetched.objectForKey(self.CKDataField) as! NSData != record.objectForKey(self.CKDataField) as! NSData
+				isDifferent = fetched.objectForKey(self.CKDataField) as! NSData != data // same thing as earlier check
 			}
 			
 			if error != nil {

@@ -684,18 +684,6 @@ class DayBrief: Serializable {
 		
 	}
 	
-//	init(record: CKRecord) {
-//		date = record.objectForKey("Day") as! NSDate
-//		let formString = NSString(data: record.objectForKey("Data") as! NSData, encoding: NSUTF8StringEncoding) as! String
-//		let parts = formString.componentsSeparatedByString("ﬂ")
-//		for part in parts {
-//			let dictParts = part.componentsSeparatedByString("Ø")
-//			let meal = MealType(rawValue: dictParts[0])!
-//			let information = MealInfo(formattedString: dictParts[1])
-//			meals[meal] = information
-//		}
-//	}
-	
 	init(date: NSDate, meals: Dictionary<MealType, MealBrief>) {
 		self.date = date
 		self.meals = meals
@@ -767,6 +755,40 @@ class MealBrief: Serializable {
 		dict["halls"] = hallsDict
 		
 		return dict
+	}
+}
+
+class PlaceBrief: Serializable {
+	var hall: Halls = .DeNeve
+	var openTime: Time = Time(hour: 8, minute: 0)
+	var closeTime: Time = Time(hour: 17, minute: 0)
+	var sectionDicts: Array<Dictionary<String, AnyObject>> = []
+	var fullData: Array<SectionBrief> {
+		get {
+			return map(sectionDicts, { (sect: Dictionary<String, AnyObject>) -> SectionBrief in
+				return SectionBrief(dict: sect)
+			}) as Array<SectionBrief>
+		}
+	}
+	
+	required init(dict: Dictionary<String, AnyObject>) {
+		hall = Halls(rawValue: dict["hall"] as! String)!
+		openTime = Time(hour: dict["openHour"] as! Int, minute: dict["openMin"] as! Int)
+		closeTime = Time(hour: dict["closeHour"] as! Int, minute: dict["closeMin"] as! Int)
+		sectionDicts = dict["sections"] as? Array<Dictionary<String, AnyObject>> ?? []
+	}
+	
+	func dictFromObject() -> Dictionary<String, AnyObject> {
+		return ["hall" : hall.rawValue, "openHour" : openTime.hour, "openMin" : openTime.minute,
+			"closeHour" : closeTime.hour, "closeMin" : closeTime.minute, "sections" : sectionDicts]
+	}
+	
+	func name(isHall: Bool) -> String {
+		return hall.displayName(isHall)
+	}
+	
+	func imageName(open: Bool) -> String {
+		return hall.imageName(open)
 	}
 }
 
