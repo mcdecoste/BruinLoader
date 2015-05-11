@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		66034AA21B003034004B4384 /* HallModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66034AA11B003034004B4384 /* HallModel.swift */; };
 		662FC3C91AC52B8400C56ECD /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 662FC3C81AC52B8400C56ECD /* CloudKit.framework */; };
 		66450DA41A85C9A4000B6811 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA31A85C9A4000B6811 /* AppDelegate.swift */; };
 		66450DA71A85C9A4000B6811 /* BruinLoader.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 66450DA51A85C9A4000B6811 /* BruinLoader.xcdatamodeld */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		66034AA11B003034004B4384 /* HallModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HallModel.swift; sourceTree = "<group>"; };
 		662FC3C81AC52B8400C56ECD /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		66450D9E1A85C9A4000B6811 /* BruinLoader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BruinLoader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		66450DA21A85C9A4000B6811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				66951A3D1AC4EF63002B359F /* Parser.swift */,
 				66951A361AC29813002B359F /* Food.swift */,
 				66951A381AC29838002B359F /* FoodModel.swift */,
+				66034AA11B003034004B4384 /* HallModel.swift */,
 			);
 			name = Required;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				66450DA41A85C9A4000B6811 /* AppDelegate.swift in Sources */,
 				66450DA71A85C9A4000B6811 /* BruinLoader.xcdatamodeld in Sources */,
 				66951A431AC4F1FA002B359F /* HppleElement.swift in Sources */,
+				66034AA21B003034004B4384 /* HallModel.swift in Sources */,
 				66450DCE1A85CB6D000B6811 /* StartTableViewController.swift in Sources */,
 				66951A451AC4F1FB002B359F /* XPathQuery.swift in Sources */,
 				66951A3E1AC4EF63002B359F /* Parser.swift in Sources */,

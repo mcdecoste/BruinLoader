@@ -51,7 +51,7 @@ func loadAllBrief(date: NSDate) -> DayBrief {
 		
 		if meal != .LateNight {
 			for hall in Halls.allDiningHalls {
-				println(hall.rawValue)
+//				println("\n" + hall.rawValue)
 				
 				let (success, hallBrief, foods) = loadMealBrief(hall, meal, date)
 				if success {
@@ -919,6 +919,10 @@ func loadMealBrief(hall: Halls, meal: MealType, date: NSDate) -> (open: Bool, in
 		}
 		restaurant.sections.append(section)
 	}
+	
+	// sort it into display order!
+	restaurant.sections = sortSections(restaurant.sections)
+	
 	return (true, restaurant, foods)
 }
 
