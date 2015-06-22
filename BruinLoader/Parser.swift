@@ -888,7 +888,13 @@ func loadMealBrief(hall: Halls, meal: MealType, date: NSDate) -> (open: Bool, in
 	}
 	
 	// sort it into display order!
-	restaurant.sections = sortSections(restaurant.sections)
+
+	restaurant.sections.sort { (lhs, rhs) -> Bool in
+		var lhsType = HallSectionType.typeFromString(lhs.name)
+		var rhsType = HallSectionType.typeFromString(rhs.name)
+		
+		return lhsType <= rhsType
+	}
 	
 	return (true, restaurant, foods)
 }

@@ -266,6 +266,61 @@ enum FoodKind: Displayable {
 }
 
 
+enum HallSectionType: Comparable {
+	case Headliner, Noteworthy, Standard, Meh
+	
+	static func typeFromString(str: String) -> HallSectionType {
+		switch str {
+		case "Exhibition Kitchen", "Euro Kitchen", "The Front Burner", "The Kitchen", "Freshly Bowled", "Harvest", "Bruin Wok", "Spice Kitchen":
+			return Headliner
+		case "Pizza Oven", "The Pizzeria", "Stone Oven", "Simply Grilled", "Iron Grill":
+			return Noteworthy
+		case "Grill", "The Grill", "Soups":
+			return Standard
+		default:
+			return Meh
+		}
+	}
+	
+	// The order here is important. Sets display order
+	static let allValues: Array<HallSectionType> = [Headliner, Noteworthy, Standard, Meh]
+}
+
+func <=(lhs: HallSectionType, rhs: HallSectionType) -> Bool {
+	return !(lhs > rhs)
+}
+
+func >=(lhs: HallSectionType, rhs: HallSectionType) -> Bool {
+	return !(lhs < rhs)
+}
+
+func <(lhs: HallSectionType, rhs: HallSectionType) -> Bool {
+	switch lhs {
+	case .Headliner:
+		return false
+	case .Noteworthy:
+		return rhs == .Headliner
+	case .Standard:
+		return rhs == .Headliner || rhs == .Noteworthy
+	default:
+		return rhs != .Meh
+	}
+}
+
+func >(lhs: HallSectionType, rhs: HallSectionType) -> Bool {
+	switch lhs {
+	case .Headliner:
+		return rhs != .Headliner
+	case .Noteworthy:
+		return rhs == .Standard || rhs == .Meh
+	case .Standard:
+		return rhs == .Meh
+	default:
+		return false
+	}
+}
+
+
 // MARK: Structs
 
 struct DayMealHall: URLProvider, Equatable {
