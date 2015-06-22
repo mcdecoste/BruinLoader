@@ -8,6 +8,18 @@
 
 import UIKit
 
+class Progression {
+	enum Progress: String {
+		case Waiting = "Waiting"
+		case Started = "Started"
+		case Error = "Error"
+		case Finished = "Finished"
+		case Uploaded = "Uploaded"
+	}
+	
+	var progress: Progress = .Started
+}
+
 class StartTableViewController: UITableViewController {
 	var cells: Array<(name: String, value: Bool)> = [("Update Hall Menus", true), ("Update Quick", false)]
 	var hallRow: Int = 0

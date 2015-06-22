@@ -9,127 +9,90 @@
 import UIKit
 
 func preload(daysAhead: Int = 7) {
-	let today = NSCalendar.currentCalendar().startOfDayForDate(NSDate())
+	preload(map(0...daysAhead, { $0 }))
+}
+
+func preload(days: Array<Int>) {
+	let cal = NSCalendar.currentCalendar()
+	let today = cal.startOfDayForDate(NSDate())
+	let daysToLoad = map(days, { return cal.dateByAddingUnit(.CalendarUnitDay, value: $0, toDate: today, options: nil)! })
 	
-	for i in 0...daysAhead {
-		let day = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: i, toDate: today, options: .allZeros)!
-		loadAndSave(day)
+	for day in daysToLoad {
+		loadAllBrief(day)
 	}
 }
 
-func loadAndSave(date: NSDate) {
-	var information = loadAllBrief(date)
-	// add in information for quick service?
-	
-	let dayJSON = information.dictFromObject()
-	let dayData = NSJSONSerialization.dataWithJSONObject(dayJSON, options: .allZeros, error: nil)!
-	
-//	let parsedBrief = DayBrief(dict: dayJSON)
-	
-	CloudManager.sharedInstance.addRecord(date, data: dayData) { (record) -> Void in
-		println("Finished Upload!")
+func uploadDay(brief: DayBrief) {
+	CloudManager.sharedInstance.addRecord(brief.date, data: serialize(brief)) { (record) -> Void in
+		postProgressNotification(brief.date, .Uploaded)
 	}
 }
 
-func loadAllBrief(date: NSDate) -> DayBrief {
-	var hours = loadHours(date)
+func loadAllBrief(date: NSDate) {
+	postProgressNotification(date, .Loading)
 	
-	let formatter = NSDateFormatter()
-	formatter.dateStyle = .ShortStyle
-	println("\n\n" + formatter.stringFromDate(date))
-	
-	var day = DayBrief(date: date, meals: [:])
-	
-	var baseMeals = MealType.allMeals(date)
-	baseMeals.append(MealType.LateNight)
-	
-	for meal in baseMeals {
-		println("\n" + meal.rawValue)
-		
-		var mealHours = hours[meal]!
-		var mealBrief = MealBrief(halls: [:])
-		
-		if meal != .LateNight {
-			for hall in Halls.allDiningHalls {
-//				println("\n" + hall.rawValue)
-				
-				let (success, hallBrief, foods) = loadMealBrief(hall, meal, date)
-				if success {
-					var hallHours = mealHours[hall]!
-					if hallHours.open {
-						hallBrief.openTime = (hallHours.openTime)!
-						hallBrief.closeTime = (hallHours.closeTime)!
-					}
-					mealBrief.halls[hall] = hallBrief
-					for (recipe, food) in foods {
-						// if first time, create food collection
-						if day.foods[recipe] == nil {
-							day.foods[recipe] = FoodCollection(info: food)
-						}
-						
-						// make a list of where it's from
-						if let mealColl = day.foods[recipe]!.places[meal.rawValue] {
-							day.foods[recipe]!.places[meal.rawValue]![hall.rawValue] = true
-						} else {
-							day.foods[recipe]!.places[meal.rawValue] = [hall.rawValue : true]
+	let hours = loadHours(date), day = DayBrief(date: date, meals: [:])
+	for meal in MealType.allMeals(date, includeLateNight: true) {
+		if let mealHours = hours[meal] {
+			var mealBrief = MealBrief(halls: [:])
+			
+			if meal.urlCode() != nil { // basically if it's not late night
+				for hall in Halls.allDiningHalls {
+					let (open, hallBrief, foods) = loadMealBrief(hall, meal, date)
+					if open && hallBrief.sections.count > 0 {
+						if let hallHours = mealHours[hall] where hallHours.open {
+							hallBrief.openTime = (hallHours.openTime)!
+							hallBrief.closeTime = (hallHours.closeTime)!
+							
+							mealBrief.halls[hall] = hallBrief
+							for (recipe, food) in foods {
+								// if first time, create food collection
+								if day.foods[recipe] == nil {
+									day.foods[recipe] = FoodCollection(info: food)
+								}
+								
+								// make a list of where it's from
+								if let mealColl = day.foods[recipe]!.places[meal.rawValue] {
+									day.foods[recipe]!.places[meal.rawValue]![hall.rawValue] = true
+								} else {
+									day.foods[recipe]!.places[meal.rawValue] = [hall.rawValue : true]
+								}
+							}
 						}
 					}
 				}
 			}
-		}
-		
-		for quick in Halls.allQuickServices {
-			if let quickHours = mealHours[quick] {
-				if quickHours.open && (quick != .DeNeve || meal == .LateNight) {
-					// add empty listing in mealInfo for the hall (with open / close times)
-					var hallBrief = RestaurantBrief(hall: quick)
-					(hallBrief.openTime, hallBrief.closeTime) = (quickHours.openTime!, quickHours.closeTime!)
-					mealBrief.halls[quick] = hallBrief
+			
+			for quick in Halls.allQuickServices {
+				if let quickHours = mealHours[quick] {
+					if quickHours.open && (quick != .DeNeve || meal == .LateNight) {
+						// add empty listing in mealInfo for the hall (with open / close times)
+						var hallBrief = RestaurantBrief(hall: quick)
+						(hallBrief.openTime, hallBrief.closeTime) = (quickHours.openTime!, quickHours.closeTime!)
+						mealBrief.halls[quick] = hallBrief
+					}
 				}
 			}
+			day.meals[meal] = mealBrief
 		}
-		day.meals[meal] = mealBrief
 	}
 	
-	return day
+	postProgressNotification(date, .Loaded)
+	uploadDay(day)
 }
 
 // MARK: Quick Service Parsers
-func preloadQuick(daysAhead: Int = 14) {
-	let today = NSCalendar.currentCalendar().dateBySettingHour(0, minute: 0, second: 0, ofDate: NSDate(), options: nil)!
-	
-	for i in 0..<daysAhead {
-		let day = NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: i, toDate: today, options: .allZeros)!
-		loadAndSaveHours(day)
-	}
-	
-	loadAndSaveQuick()
-}
-
-func loadAndSaveHours(date: NSDate) {
-	let dateInfo = NSCalendar.currentCalendar().components(.CalendarUnitDay | .CalendarUnitMonth | .CalendarUnitYear, fromDate: date)
-	let appDocDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as! String
-	
-	var storePath = appDocDir.stringByAppendingPathComponent("Development")
-	storePath = storePath.stringByAppendingPathComponent("iOS")
-	storePath = storePath.stringByAppendingPathComponent("BruinBackendFiles")
-	storePath = storePath.stringByAppendingPathComponent("Hours")
-	storePath = storePath.stringByAppendingPathComponent("\(dateInfo.year)-\(dateInfo.month)-\(dateInfo.day)")
-	
-	let information = HoursInfo(dictionary: loadHours(date)).formattedString()
-	information.dataUsingEncoding(NSUTF8StringEncoding)!.writeToFile(storePath, atomically: true)
-}
 
 func loadAndSaveQuick() {
-	let quickBrief = loadQuick()
-	let quickData = NSJSONSerialization.dataWithJSONObject(quickBrief.dictFromObject(), options: .allZeros, error: nil)!
-	
+	let quickData = serialize(loadQuick())
 	CloudManager.sharedInstance.addQuickRecord(quickData, completion: { (record) -> Void in
-		println("Updated Quick!")
+		postProgressNotification(nil, .Uploaded)
 	})
 }
 
 func loadQuick() -> DayBrief {
+	postProgressNotification(nil, .Loading)
+	
 	// Bruin Cafe
 	println("Bruin Cafe")
 	let bcBrief = loadBruinCafe()
@@ -184,6 +147,7 @@ func loadQuick() -> DayBrief {
 		}
 	}
 	
+	postProgressNotification(nil, .Loaded)
 	return quickBrief
 }
 
@@ -288,7 +252,6 @@ func loadBruinCafe() -> DayBrief {
 	}
 	
 	var dayBrief = DayBrief()
-	dayBrief.date = NSDate()
 	dayBrief.foods = foods
 	
 	let mealsForDay: Array<(meal: MealType, info: RestaurantBrief)> = [(.Breakfast, breakfastBrief), (.Lunch, lunchBrief), (.Dinner, dinnerBrief), (.LateNight, lateNightBrief)]
@@ -733,70 +696,70 @@ func foodURL(recipe: String, portion: String) -> String {
 }
 
 // MARK: HTML loaders
-func loadHours(date: NSDate) -> Dictionary<MealType, Dictionary<Halls, (open: Bool, openTime: Time?, closeTime: Time?)>> {
+private func mealsForDay(date: NSDate) -> Array<MealType> {
 	let dow = NSCalendar.currentCalendar().component(.CalendarUnitWeekday, fromDate: date)
-	let mealsForDay: Array<MealType> = dow == 1 || dow == 7 ? [.Breakfast, .Brunch, .Dinner, .LateNight] : [.Breakfast, .Lunch, .Dinner, .LateNight]
-	
-	var hours: Dictionary<MealType, Dictionary<Halls, (open: Bool, openTime: Time?, closeTime: Time?)>> = [mealsForDay[0]:[:], mealsForDay[1]:[:], mealsForDay[2]:[:], mealsForDay[3]:[:]]
+	return dow == 1 || dow == 7 ? [.Breakfast, .Brunch, .Dinner, .LateNight] : [.Breakfast, .Lunch, .Dinner, .LateNight]
+}
+
+func loadHours(date: NSDate) -> Dictionary<MealType, Dictionary<Halls, (open: Bool, openTime: Time?, closeTime: Time?)>> {
+	var hours: Dictionary<MealType, Dictionary<Halls, (open: Bool, openTime: Time?, closeTime: Time?)>> = [:]
+	let dayMeals = mealsForDay(date)
+	for meal in dayMeals { hours[meal] = [:] }
 	
 	var htmlError: NSError? = nil
-	var html = NSString(contentsOfURL: NSURL(string: hoursURL(date))!, encoding: NSASCIIStringEncoding, error: &htmlError) as! String
-	
-	if html.rangeOfString("00am") == nil { return hours }
-	var hourNodes = Hpple(HTMLData: html).searchWithXPathQuery("//table")!
-	
-	for node in Array(hourNodes[3...hourNodes.count-1]) {
-		var subNodes = node.children!
-		var subNodeIndex = subNodes.count - 1
-		while subNodeIndex >= 0 {
-			if subNodeIndex % 2 == 0 { subNodes.removeAtIndex(subNodeIndex) }
-			subNodeIndex--
-		}
-		
-		for body in Array(subNodes[2...subNodes.count-1]) {
-			var subBodies = body.children!
-			var subBodyIndex = subBodies.count - 1
-			while subBodyIndex >= 0 {
-				if subBodyIndex % 2 == 0 { subBodies.removeAtIndex(subBodyIndex) }
-				subBodyIndex--
+	if let hoursURL = NSURL(string: hoursURL(date)), html = NSString(contentsOfURL: hoursURL, encoding: NSASCIIStringEncoding, error: &htmlError) as? String, _ = html.rangeOfString("00am"), hourNodes = Hpple(HTMLData: html).searchWithXPathQuery("//table") {
+		for node in Array(hourNodes[3...hourNodes.count-1]) {
+			var subNodes = node.children!, subNodeIndex = subNodes.count - 1
+			
+			// TODO: find a good way to filter
+//			subNodes.filter({ (element: HppleElement) -> Bool in
+//				
+//			})
+			
+			while subNodeIndex >= 0 {
+				if subNodeIndex % 2 == 0 { subNodes.removeAtIndex(subNodeIndex) }
+				subNodeIndex--
 			}
 			
-			var hall: Halls = .DeNeve // default value
-			var layerIndex = 0
-			for layer in subBodies {
-				if layerIndex == 0 {
-					var restaurantName = (layer.children?[1].text?.stringByReplacingOccurrencesOfString("\r\n\t", withString: ""))!
-					restaurantName = restaurantName.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
-					restaurantName = restaurantName.stringByReplacingOccurrencesOfString("Ã©", withString: "e")
-					
-					hall = Halls.hallForString(restaurantName)!
-				} else {
-					var meal: MealType = mealsForDay[layerIndex-1]
-					var open = true
-					var openTime: Time? = nil
-					var closeTime: Time? = nil
-					
-					var openString = (layer.children?[1].text?.stringByReplacingOccurrencesOfString("\r\n\t", withString: ""))!
-					openString = openString.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
-					openString = openString.stringByReplacingOccurrencesOfString(" -", withString: "")
-					
-					// check if the place is closed
-					if openString.rangeOfString("CLOSED") != nil {
-						open = false
-					} else {
-						var closeString = (layer.children?[3].text?.stringByReplacingOccurrencesOfString("\r\n\t", withString: ""))!
-						closeString = closeString.stringByTrimmingCharactersInSet(.whitespaceCharacterSet())
-						
-						openTime = Time(hoursString: openString)
-						closeTime = Time(hoursString: closeString)
+			for body in Array(subNodes[2...subNodes.count-1]) {
+				if var subBodies = body.children {
+//					var subBodyIndex = subBodies.count - 1
+					for var subBodyIndex = subBodies.count - 1; subBodyIndex >= 0; subBodyIndex-- {
+						if subBodyIndex % 2 == 0 {
+							subBodies.removeAtIndex(subBodyIndex)
+						}
 					}
 					
-					if ((hours[meal]!)[hall]) == nil || ((hours[meal]!)[hall])!.openTime == nil {
-						// the time has not yet been set
-						(hours[meal]!)[hall] = (open, openTime, closeTime)
+					var hall: Halls?
+					for (layerIndex, layer) in enumerate(subBodies) {
+						if layerIndex == 0 {
+							if let restaurantName = layer.children?[1].text?.stringByReplacingOccurrencesOfString("\r\n\t", withString: "").stringByTrimmingCharactersInSet(.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString("Ã©", withString: "e"), newHall = Halls.hallForString(restaurantName) {
+								hall = newHall
+							} else {
+								hall = nil
+							}
+						} else {
+							var meal: MealType = dayMeals[layerIndex-1]
+							var open = false, openTime: Time?, closeTime: Time?
+							
+							if let currHall = hall, openString = layer.children?[1].text?.stringByReplacingOccurrencesOfString("\r\n\t", withString: "").stringByTrimmingCharactersInSet(.whitespaceCharacterSet()).stringByReplacingOccurrencesOfString(" -", withString: "") where openString.rangeOfString("CLOSED") == nil {
+								open = true
+								openTime = Time(hoursString: openString)
+								
+								if let closeString = layer.children?[3].text?.stringByReplacingOccurrencesOfString("\r\n\t", withString: "").stringByTrimmingCharactersInSet(.whitespaceCharacterSet()) {
+									closeTime = Time(hoursString: closeString)
+								}
+								
+								if let mealHours = hours[meal] {
+									if let hallMealHours = mealHours[currHall] where hallMealHours.openTime != nil { }
+									else { // equilvalent to hours[meal][currHall] == nil || hours[meal][currHall].openTime == nil
+										(hours[meal]!)[currHall] = (open, openTime, closeTime)
+									}
+								}
+							}
+						}
 					}
 				}
-				layerIndex++
 			}
 		}
 	}
@@ -807,17 +770,21 @@ func loadMealBrief(hall: Halls, meal: MealType, date: NSDate) -> (open: Bool, in
 	var restaurant = RestaurantBrief(hall: hall)
 	var foods: Dictionary<String, FoodInfo> = [:]
 	
-	var url = hallURL(hall, meal, date)
+	var url = NSURL(string: hallURL(hall, meal, date))!
 	var htmlError: NSError? = nil
-	var htmlNS = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSASCIIStringEncoding, error: &htmlError)!
-	var html = htmlNS as String
-	
-	// check if hall is even open
-	if !htmlNS.containsString("menulocheader") {
+	var html: String
+	var htmlData: NSData?
+	if let htmlNS = NSString(contentsOfURL: url, encoding: NSASCIIStringEncoding, error: &htmlError) {
+		if !htmlNS.containsString("menulocheader") {
+			return (false, restaurant, [:])
+		}
+		
+		html = htmlNS as String
+		htmlData = htmlNS.dataUsingEncoding(NSASCIIStringEncoding)
+	} else {
+		println(htmlError)
 		return (false, restaurant, [:])
 	}
-	
-	var htmlData = htmlNS.dataUsingEncoding(NSASCIIStringEncoding)
 	
 	var mealDescriptions = foodDescriptions(html)
 	var foodNodes = Hpple(HTMLData: html).searchWithXPathQuery("//body/div/div[position()=3]/div/table/node()")!

@@ -9,61 +9,6 @@
 import UIKit
 import CloudKit
 
-protocol Serializable {
-	func dictFromObject() -> Dictionary<String, AnyObject>
-	init(dict: Dictionary<String, AnyObject>)
-}
-
-func representsToday(date: NSDate) -> Bool {
-	return daysInFuture(date) == 0
-}
-
-func daysInFuture(date: NSDate) -> Int {
-	let today = NSCalendar.currentCalendar().components(.CalendarUnitDay, fromDate: NSDate()).day
-	let selectedDay = NSCalendar.currentCalendar().components(.CalendarUnitDay, fromDate: date).day
-	return abs(today - selectedDay)
-}
-
-class Time {
-	var hour: Int
-	var minute: Int
-	
-	/// give hour in 24 hour notation (can be more than 24 hours if past midnight)
-	init(hour: Int, minute: Int) {
-		self.hour = hour
-		self.minute = minute
-	}
-	
-	init(hoursString: String) {
-		var formatter = NSDateFormatter()
-		formatter.dateFormat = "h:mma"
-		let comps = NSCalendar.currentCalendar().components(.CalendarUnitHour | .CalendarUnitMinute, fromDate: formatter.dateFromString(hoursString)!)
-		var increase = (comps.hour < 7) ? 24 : 0
-		self.hour = comps.hour + increase
-		self.minute = comps.minute
-	}
-	
-	init(hoursString: String, date: NSDate) {
-		var formatter = NSDateFormatter()
-		formatter.dateFormat = "h:mma"
-		let interval = formatter.dateFromString(hoursString)!.timeIntervalSinceDate(date)
-		
-		self.hour = Int(interval) / 3600
-		self.minute = Int(interval % 3600) / 60
-	}
-	
-	func timeDateForDate(dayDate: NSDate?) -> NSDate? {
-		var interval = 3600.0 * Double(hour) + 60 * Double(minute)
-		return NSCalendar.currentCalendar().dateBySettingHour(0, minute: 0, second: 0, ofDate: dayDate!, options: NSCalendarOptions())?.dateByAddingTimeInterval(interval)
-	}
-	
-	func displayString() -> String {
-		var formatter = NSDateFormatter()
-		formatter.dateFormat = "h:mm a"
-		return formatter.stringFromDate(timeDateForDate(NSDate())!)
-	}
-}
-
 enum Halls: String {
 	case DeNeve = "De Neve"
 	case Covel = "Covel"
@@ -103,7 +48,13 @@ enum Halls: String {
 		for hall in Halls.allRestaurants {
 			if string.lowercaseString.rangeOfString(hall.rawValue.lowercaseString) != nil { return hall }
 		}
-		return nil
+		
+		switch string {
+		case "Sproul":
+			return .BruinPlate
+		default:
+			return nil
+		}
 	}
 	
 	func imageName(open: Bool) -> String {
@@ -203,7 +154,7 @@ class MealHoursInfo {
 // MARK:- OLD MODEL
 
 class DayInfo: Serializable {
-	var date = comparisonDate(NSDate())
+	var date = comparisonDate()
 	var meals: Dictionary<MealType, MealInfo> = [:]
 	
 	init() {
@@ -676,7 +627,7 @@ struct FoodCollection: Serializable {
 }
 
 class DayBrief: Serializable {
-	var date = comparisonDate(NSDate())
+	var date = comparisonDate()
 	var meals: Dictionary<MealType, MealBrief> = [:]
 	var foods: Dictionary<String, FoodCollection> = [:]
 	
@@ -704,6 +655,13 @@ class DayBrief: Serializable {
 		for (recipe, foodDict) in foodsDict {
 			foods[recipe] = FoodCollection(dict: foodDict)
 		}
+	}
+	
+	static func isValid(dict: Dictionary<String, AnyObject>) -> Bool {
+		if let dateStr = dict["date"] as? String, mealDict = dict["meals"] as? Dictionary<String, Dictionary<String, AnyObject>>, foodDict = dict["foods"] as? Dictionary<String, Dictionary<String, AnyObject>> {
+			return true
+		}
+		return false
 	}
 	
 	func dictFromObject() -> Dictionary<String, AnyObject> {
@@ -1022,7 +980,7 @@ class NutritionListing {
 	}
 	
 	internal func dailyValue(type: Nutrient) -> Int? {
-		if let dailyValue = Nutrient.allDailyValues[(find(Nutrient.allValues, type))!] {
+		if let index = find(Nutrient.allValues, type), dailyValue = Nutrient.allDailyValues[index] {
 			return Int(100.0 * ((measure as NSString).floatValue) / Float(dailyValue))
 		}
 		return nil
@@ -1055,8 +1013,11 @@ enum MealType : String {
 		}
 	}
 	
-	static func allMeals(date: NSDate) -> Array<MealType> {
-		var dow = NSCalendar.currentCalendar().component(.CalendarUnitWeekday, fromDate: date)
-		return (dow == 1 || dow == 7) ? [.Brunch, .Dinner] : [.Breakfast, .Lunch, .Dinner]
+	static func allMeals(date: NSDate, includeLateNight: Bool = false) -> Array<MealType> {
+		var results: Array<MealType> = NSCalendar.currentCalendar().isDateInWeekend(date) ? [.Brunch, .Dinner] : [.Breakfast, .Lunch, .Dinner]
+		if includeLateNight && !contains(results, .LateNight) {
+			results.append(.LateNight)
+		}
+		return results
 	}
 }

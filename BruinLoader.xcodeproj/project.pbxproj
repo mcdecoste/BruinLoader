@@ -17,6 +17,7 @@
 		66450DBD1A85C9A4000B6811 /* BruinLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */; };
 		66450DCA1A85CAD3000B6811 /* ProgressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */; };
 		66450DCE1A85CB6D000B6811 /* StartTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */; };
+		665A10F61B2A1E93005883C6 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A10F51B2A1E93005883C6 /* Helpers.swift */; };
 		66951A351AC297C2002B359F /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A341AC297C2002B359F /* CloudManager.swift */; };
 		66951A371AC29813002B359F /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A361AC29813002B359F /* Food.swift */; };
 		66951A391AC29838002B359F /* FoodModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A381AC29838002B359F /* FoodModel.swift */; };
@@ -25,6 +26,7 @@
 		66951A441AC4F1FA002B359F /* Hpple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A411AC4F1FA002B359F /* Hpple.swift */; };
 		66951A451AC4F1FB002B359F /* XPathQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A421AC4F1FA002B359F /* XPathQuery.swift */; };
 		66951A471AC4F217002B359F /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 66951A461AC4F217002B359F /* libxml2.dylib */; };
+		66E69DB91B2FA170008901D8 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E69DB81B2FA170008901D8 /* Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,7 @@
 		66450DC61A85C9B6000B6811 /* BruinLoader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BruinLoader.entitlements; sourceTree = "<group>"; };
 		66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTableViewController.swift; sourceTree = "<group>"; };
 		66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartTableViewController.swift; sourceTree = "<group>"; };
+		665A10F51B2A1E93005883C6 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		66951A341AC297C2002B359F /* CloudManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
 		66951A361AC29813002B359F /* Food.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		66951A381AC29838002B359F /* FoodModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodModel.swift; sourceTree = "<group>"; };
@@ -62,6 +65,7 @@
 		66951A421AC4F1FA002B359F /* XPathQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XPathQuery.swift; sourceTree = "<group>"; };
 		66951A461AC4F217002B359F /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		66951A481AC4F232002B359F /* BruinLoader-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "BruinLoader-Bridging-Header.h"; path = "BruinLoader/BruinLoader-Bridging-Header.h"; sourceTree = "<group>"; };
+		66E69DB81B2FA170008901D8 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +112,7 @@
 		66450DA01A85C9A4000B6811 /* BruinLoader */ = {
 			isa = PBXGroup;
 			children = (
+				66E69DB71B2FA13C008901D8 /* Model */,
 				66951A3F1AC4F1E3002B359F /* Hpple */,
 				66450DC61A85C9B6000B6811 /* BruinLoader.entitlements */,
 				66450DA31A85C9A4000B6811 /* AppDelegate.swift */,
@@ -169,9 +174,8 @@
 			children = (
 				66951A341AC297C2002B359F /* CloudManager.swift */,
 				66951A3D1AC4EF63002B359F /* Parser.swift */,
+				665A10F51B2A1E93005883C6 /* Helpers.swift */,
 				66951A361AC29813002B359F /* Food.swift */,
-				66951A381AC29838002B359F /* FoodModel.swift */,
-				66034AA11B003034004B4384 /* HallModel.swift */,
 			);
 			name = Required;
 			sourceTree = "<group>";
@@ -184,6 +188,16 @@
 				66951A421AC4F1FA002B359F /* XPathQuery.swift */,
 			);
 			name = Hpple;
+			sourceTree = "<group>";
+		};
+		66E69DB71B2FA13C008901D8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				66951A381AC29838002B359F /* FoodModel.swift */,
+				66034AA11B003034004B4384 /* HallModel.swift */,
+				66E69DB81B2FA170008901D8 /* Model.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,9 +313,11 @@
 				66034AA21B003034004B4384 /* HallModel.swift in Sources */,
 				66450DCE1A85CB6D000B6811 /* StartTableViewController.swift in Sources */,
 				66951A451AC4F1FB002B359F /* XPathQuery.swift in Sources */,
+				66E69DB91B2FA170008901D8 /* Model.swift in Sources */,
 				66951A3E1AC4EF63002B359F /* Parser.swift in Sources */,
 				66450DCA1A85CAD3000B6811 /* ProgressTableViewController.swift in Sources */,
 				66951A371AC29813002B359F /* Food.swift in Sources */,
+				665A10F61B2A1E93005883C6 /* Helpers.swift in Sources */,
 				66951A441AC4F1FA002B359F /* Hpple.swift in Sources */,
 				66951A391AC29838002B359F /* FoodModel.swift in Sources */,
 			);

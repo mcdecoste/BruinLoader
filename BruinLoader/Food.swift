@@ -10,12 +10,14 @@ import UIKit
 import CloudKit
 import CoreData
 
-func comparisonDate(date: NSDate) -> NSDate {
-	return NSCalendar.currentCalendar().dateBySettingHour(0, minute: 0, second: 0, ofDate: date, options: nil)!
+var currCal = NSCalendar.currentCalendar()
+
+func comparisonDate(date: NSDate = NSDate()) -> NSDate {
+	return currCal.startOfDayForDate(date)
 }
 
-func comparisonDate(daysInFuture: Int = 0) -> NSDate {
-	return NSCalendar.currentCalendar().dateByAddingUnit(.CalendarUnitDay, value: daysInFuture, toDate: comparisonDate(NSDate()), options: nil)!
+func comparisonDate(daysInFuture: Int) -> NSDate {
+	return currCal.dateByAddingUnit(.CalendarUnitDay, value: daysInFuture, toDate: comparisonDate(), options: nil)!
 }
 
 class DiningDay: NSManagedObject {
@@ -26,7 +28,7 @@ class DiningDay: NSManagedObject {
 	class func dataFromInfo(moc: NSManagedObjectContext, record: CKRecord) -> DiningDay {
 		var request = NSFetchRequest(entityName: "DiningDay")
 		
-		let recordDay = comparisonDate(record.objectForKey("Day") as! NSDate)
+		let recordDay = comparisonDate(date: record.objectForKey("Day") as! NSDate)
 		request.predicate = NSPredicate(format: "day == %@", recordDay)
 		
 		if let fetchResults = moc.executeFetchRequest(request, error: nil) as? [DiningDay] {
@@ -74,14 +76,14 @@ class Food: NSManagedObject {
 		
 		newItem.favorite = false
 		newItem.notify = false
-		newItem.date = comparisonDate(NSDate())
+		newItem.date = comparisonDate()
 		newItem.servings = 0
 		
 		return newItem
 	}
 	
 	func checkDate() {
-		let compareDate = comparisonDate(NSDate())
+		let compareDate = comparisonDate()
 		
 		let dateComponents = components(compareDate)
 		let resultComponents = components(date)
