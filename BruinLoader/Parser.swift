@@ -670,7 +670,7 @@ func loadLateNight() -> DayBrief {
 
 // used to have a forceTwoDigits attribute, but it isn't needed
 func dateURL(date: NSDate) -> String {
-	var formatter = NSDateFormatter()
+	let formatter = NSDateFormatter()
 	formatter.dateFormat = "M"
 	var dateString = formatter.stringFromDate(date) + "%2F"
 	formatter.dateFormat = "d"
@@ -682,8 +682,7 @@ func dateURL(date: NSDate) -> String {
 }
 
 func hoursURL(date: NSDate) -> String {
-	var dateString = dateURL(date)
-	return "http://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm?serviceDate=\(dateString)"
+	return "https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm?serviceDate=\(dateURL(date))"
 }
 
 func hallURL(hall: Halls, meal: MealType, date: NSDate) -> String {
@@ -707,7 +706,9 @@ func loadHours(date: NSDate) -> Dictionary<MealType, Dictionary<Halls, (open: Bo
 	for meal in dayMeals { hours[meal] = [:] }
 	
 	var htmlError: NSError? = nil
-	if let hoursURL = NSURL(string: hoursURL(date)), html = NSString(contentsOfURL: hoursURL, encoding: NSASCIIStringEncoding, error: &htmlError) as? String, _ = html.rangeOfString("00am"), hourNodes = Hpple(HTMLData: html).searchWithXPathQuery("//table") {
+	var htmlbase = hoursURL(date)
+	
+	if let hoursURL = NSURL(string: htmlbase), html = NSString(contentsOfURL: hoursURL, encoding: NSASCIIStringEncoding, error: &htmlError) as? String, _ = html.rangeOfString("00am"), hourNodes = Hpple(HTMLData: html).searchWithXPathQuery("//table") {
 		for node in Array(hourNodes[3...hourNodes.count-1]) {
 			var subNodes = node.children!, subNodeIndex = subNodes.count - 1
 			
@@ -893,7 +894,7 @@ func loadMealBrief(hall: Halls, meal: MealType, date: NSDate) -> (open: Bool, in
 		var lhsType = HallSectionType.typeFromString(lhs.name)
 		var rhsType = HallSectionType.typeFromString(rhs.name)
 		
-		return lhsType <= rhsType
+		return lhsType >= rhsType
 	}
 	
 	return (true, restaurant, foods)
