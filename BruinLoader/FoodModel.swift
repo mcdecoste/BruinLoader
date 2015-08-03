@@ -453,7 +453,7 @@ class FoodInfo: Serializable {
 	/// Only call this initializer if you had the precisely formatted string created by the foodString() function
 	init(formattedString: String) {
 		let parts = formattedString.componentsSeparatedByString("°")
-
+		
 		name = parts[0]
 		recipe = parts[1]
 		type = FoodType(rawValue: parts[2])!

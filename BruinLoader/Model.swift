@@ -721,8 +721,8 @@ struct DiningDayShort: Serializable {
 }
 
 struct QuickFullShort: Serializable {
-	var meals: Dictionary<Meal, QuickMealShort>
-	var foods: Dictionary<String, FoodLocations>
+	var meals: Dictionary<Meal, QuickMealShort> = [:]
+	var foods: Dictionary<String, FoodLocations> = [:]
 	
 	init(dict: Dictionary<String, AnyObject>) {
 		if let mealsDict = dict["meals"] as? Dictionary<String, Dictionary<String, AnyObject>>, foodDict = dict["foods"] as? Dictionary<String, Dictionary<String, AnyObject>> {
@@ -741,10 +741,6 @@ struct QuickFullShort: Serializable {
 				newFoods[recipe] = FoodLocations(dict: foodDict)
 			}
 			foods = newFoods
-		} else {
-			// fail case
-			meals = [:]
-			foods = [:]
 		}
 	}
 	
@@ -777,6 +773,3 @@ struct QuickFullShort: Serializable {
 		return false
 	}
 }
-
-// MARK: Helper Functions
-

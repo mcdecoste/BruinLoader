@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 func preload(daysAhead: Int = 7) {
 	preload(map(0...daysAhead, { $0 }))
 }
@@ -23,8 +24,10 @@ func preload(days: Array<Int>) {
 }
 
 func uploadDay(brief: DayBrief) {
-	CloudManager.sharedInstance.addRecord(brief.date, data: serialize(brief)) { (record) -> Void in
+	CloudManager.sharedInstance.addRecord(brief.date, data: serialize(brief), completion: { (record) -> Void in
 		postProgressNotification(brief.date, .Uploaded)
+		}) { () -> Void in
+			postProgressNotification(brief.date, .NoChange)
 	}
 }
 
@@ -670,7 +673,7 @@ func loadLateNight() -> DayBrief {
 
 // used to have a forceTwoDigits attribute, but it isn't needed
 func dateURL(date: NSDate) -> String {
-	let formatter = NSDateFormatter()
+	var formatter = NSDateFormatter()
 	formatter.dateFormat = "M"
 	var dateString = formatter.stringFromDate(date) + "%2F"
 	formatter.dateFormat = "d"
@@ -682,7 +685,9 @@ func dateURL(date: NSDate) -> String {
 }
 
 func hoursURL(date: NSDate) -> String {
-	return "https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm?serviceDate=\(dateURL(date))"
+	var dateString = dateURL(date)
+	return "https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm?serviceDate=\(dateString)"
+	// https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm?serviceDate=07%2F14%2F2015#
 }
 
 func hallURL(hall: Halls, meal: MealType, date: NSDate) -> String {
@@ -708,14 +713,17 @@ func loadHours(date: NSDate) -> Dictionary<MealType, Dictionary<Halls, (open: Bo
 	var htmlError: NSError? = nil
 	var htmlbase = hoursURL(date)
 	
+	// https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm
+	// https://secure5.ha.ucla.edu/restauranthours/dining-hall-hours-by-day.cfm?serviceDate=07%2F14%2F2015#
+	
 	if let hoursURL = NSURL(string: htmlbase), html = NSString(contentsOfURL: hoursURL, encoding: NSASCIIStringEncoding, error: &htmlError) as? String, _ = html.rangeOfString("00am"), hourNodes = Hpple(HTMLData: html).searchWithXPathQuery("//table") {
 		for node in Array(hourNodes[3...hourNodes.count-1]) {
 			var subNodes = node.children!, subNodeIndex = subNodes.count - 1
 			
 			// TODO: find a good way to filter
-//			subNodes.filter({ (element: HppleElement) -> Bool in
-//				
-//			})
+			//			subNodes.filter({ (element: HppleElement) -> Bool in
+			//
+			//			})
 			
 			while subNodeIndex >= 0 {
 				if subNodeIndex % 2 == 0 { subNodes.removeAtIndex(subNodeIndex) }
@@ -724,7 +732,7 @@ func loadHours(date: NSDate) -> Dictionary<MealType, Dictionary<Halls, (open: Bo
 			
 			for body in Array(subNodes[2...subNodes.count-1]) {
 				if var subBodies = body.children {
-//					var subBodyIndex = subBodies.count - 1
+					//					var subBodyIndex = subBodies.count - 1
 					for var subBodyIndex = subBodies.count - 1; subBodyIndex >= 0; subBodyIndex-- {
 						if subBodyIndex % 2 == 0 {
 							subBodies.removeAtIndex(subBodyIndex)
@@ -889,12 +897,12 @@ func loadMealBrief(hall: Halls, meal: MealType, date: NSDate) -> (open: Bool, in
 	}
 	
 	// sort it into display order!
-
+	
 	restaurant.sections.sort { (lhs, rhs) -> Bool in
 		var lhsType = HallSectionType.typeFromString(lhs.name)
 		var rhsType = HallSectionType.typeFromString(rhs.name)
 		
-		return lhsType >= rhsType
+		return lhsType > rhsType
 	}
 	
 	return (true, restaurant, foods)
@@ -951,13 +959,13 @@ func loadNutrition(recipe: String, portion: String) -> (nutrition: Dictionary<Nu
 	}
 	abort()
 	
-//	var html = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSASCIIStringEncoding, error: &htmlError) as! String
-//	if html.rangeOfString("Nutrition") == nil { // fail case
-//		return (nutrition: [:], ingredients: "")
-//	}
-//	
-//	var parser = Hpple(HTMLData: html)
-//	return (nutrition: loadNutritionFacts(parser), ingredients: loadIngredients(parser))
+	//	var html = NSString(contentsOfURL: NSURL(string: url)!, encoding: NSASCIIStringEncoding, error: &htmlError) as! String
+	//	if html.rangeOfString("Nutrition") == nil { // fail case
+	//		return (nutrition: [:], ingredients: "")
+	//	}
+	//
+	//	var parser = Hpple(HTMLData: html)
+	//	return (nutrition: loadNutritionFacts(parser), ingredients: loadIngredients(parser))
 }
 
 // MARK: Helpers

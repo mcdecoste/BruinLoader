@@ -16,11 +16,11 @@ protocol Serializable {
 enum Progress: String {
 	case Waiting = "StartedWaiting", Loading = "StartedLoading"
 	case Error = "EncounteredError", Loaded = "FinishedLoading"
-	case Uploaded = "FinishedUpload"
+	case Uploaded = "FinishedUpload", NoChange = "NoChange"
 }
 
 func postProgressNotification(date: NSDate?, progress: Progress) {
-	
+	NSNotificationCenter.defaultCenter().postNotificationName("ProgressChanged", object: date!, userInfo: ["progress" : progress.rawValue])
 }
 
 func errorOccuredInLoad(date: NSDate?, error: NSError) {

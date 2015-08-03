@@ -14,7 +14,6 @@
 		66450DAE1A85C9A4000B6811 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAD1A85C9A4000B6811 /* Images.xcassets */; };
 		66450DB11A85C9A4000B6811 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 66450DAF1A85C9A4000B6811 /* LaunchScreen.xib */; };
 		66450DBD1A85C9A4000B6811 /* BruinLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */; };
-		66450DCA1A85CAD3000B6811 /* ProgressTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */; };
 		66450DCE1A85CB6D000B6811 /* StartTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */; };
 		665A10F61B2A1E93005883C6 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 665A10F51B2A1E93005883C6 /* Helpers.swift */; };
 		66951A351AC297C2002B359F /* CloudManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66951A341AC297C2002B359F /* CloudManager.swift */; };
@@ -51,7 +50,6 @@
 		66450DBB1A85C9A4000B6811 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		66450DBC1A85C9A4000B6811 /* BruinLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruinLoaderTests.swift; sourceTree = "<group>"; };
 		66450DC61A85C9B6000B6811 /* BruinLoader.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BruinLoader.entitlements; sourceTree = "<group>"; };
-		66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressTableViewController.swift; sourceTree = "<group>"; };
 		66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartTableViewController.swift; sourceTree = "<group>"; };
 		665A10F51B2A1E93005883C6 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		66951A341AC297C2002B359F /* CloudManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudManager.swift; sourceTree = "<group>"; };
@@ -111,17 +109,17 @@
 			isa = PBXGroup;
 			children = (
 				66E69DB71B2FA13C008901D8 /* Model */,
+				66951A3A1AC2984A002B359F /* Required */,
+				666DA3AE1A85DC0D005479C0 /* Controller */,
 				66951A3F1AC4F1E3002B359F /* Hpple */,
 				66450DC61A85C9B6000B6811 /* BruinLoader.entitlements */,
 				66450DA31A85C9A4000B6811 /* AppDelegate.swift */,
 				66450DAA1A85C9A4000B6811 /* Main.storyboard */,
-				666DA3AE1A85DC0D005479C0 /* Controller */,
 				666DA3AF1A85DC1E005479C0 /* Cells */,
 				66450DAD1A85C9A4000B6811 /* Images.xcassets */,
 				66450DAF1A85C9A4000B6811 /* LaunchScreen.xib */,
 				66450DA51A85C9A4000B6811 /* BruinLoader.xcdatamodeld */,
 				66450DA11A85C9A4000B6811 /* Supporting Files */,
-				66951A3A1AC2984A002B359F /* Required */,
 			);
 			path = BruinLoader;
 			sourceTree = "<group>";
@@ -155,7 +153,6 @@
 			isa = PBXGroup;
 			children = (
 				66450DCD1A85CB6D000B6811 /* StartTableViewController.swift */,
-				66450DC91A85CAD3000B6811 /* ProgressTableViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -241,6 +238,7 @@
 		66450D961A85C9A4000B6811 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = "Matthew DeCoste";
 				TargetAttributes = {
@@ -311,7 +309,6 @@
 				66951A451AC4F1FB002B359F /* XPathQuery.swift in Sources */,
 				66E69DB91B2FA170008901D8 /* Model.swift in Sources */,
 				66951A3E1AC4EF63002B359F /* Parser.swift in Sources */,
-				66450DCA1A85CAD3000B6811 /* ProgressTableViewController.swift in Sources */,
 				66951A371AC29813002B359F /* Food.swift in Sources */,
 				665A10F61B2A1E93005883C6 /* Helpers.swift in Sources */,
 				66951A441AC4F1FA002B359F /* Hpple.swift in Sources */,
